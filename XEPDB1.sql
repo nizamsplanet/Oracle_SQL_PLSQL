@@ -4,11 +4,14 @@
 ords-23.3.0.289.1830.zip
 apex_22.1_en.zip
 OracleXE213_Win64.zip
+SQLTools 2.0 x64 (i prefer this over sqldeveloper, somehow )
 7-zip
-windows command line
+windows command line (Windows 11 in my case)
+username and folder paths are relative to how your windows is configured*
 
 
-
+--Even though oracle expects better passwords while installing
+you can later change them using alter command to the ones as trivial as scott/tiger combinations from Old days*
 
 
 unzip the APEX possibly here
@@ -31,7 +34,7 @@ next 64m maxsize 8G
 extent management local;
 
 
-@apexins.sql apex apex temp /i/
+@apexins.sql apex apex temp /images/
 
 JOB_QUEUE_PROCESSES: 320
 timing for: Validating Installation
@@ -91,16 +94,6 @@ Created instance administrator ADMIN.
 
 
 SYS> @apex_rest_config.sql
-
-
-
-
-
-
-
-
-
-
 
 
 Enter a password for the APEX_LISTENER user              []
@@ -228,5 +221,30 @@ The setting named: security.requestValidationFunction was set to: ords_util.auth
 
 
 
-cmd start C:\app\ords\bin\ords.exe --config C:\app\config\ords serve
+cmd 
+cd C:\app\ords\bin\
+ords.exe --config C:\app\config\ords serve
+
+this will by default run in 8080; so if you have tomcat installed elsewhere its better to stop or disable before doing the above
+also important: C:\app\config\ords\global\doc_root 
+you have to place the \images and \icons folders from apex (unzipped earlier) inside this path before starting the above
+
+now you can access the apex admin page and create workspace, app and role from http://localhost:8080
+
+there you will have templates you can download and install from or write your own page.
+
+meanwhile you can download HR, order, customer and related schema from github\oracle to play with your query
+
+you can also explore the whole stuff via ODBC driver & Libreoffice calc/base, and use sqltools to create your own procedures and functions and tables.
+
+Additionally, you can download/use openresty for windows to create your reverse proxy, access to static images using nginx inbuilt and SSL termination.
+
+Also, instead of using ords as command line executable, you can wrap this up with NSSM servie creator/configurator to do this, avoiding Tomcat/apache altogether.
+
+
+Thanks
+Nizam
+25/10/2023
+
+
 
